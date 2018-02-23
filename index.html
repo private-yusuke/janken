@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>janken</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		
+	</style>
+	<script type="text/javascript">
+		// 0: player wins, 1: machine wins, 2: draw
+
+		function machineMove() {
+			return Math.floor(Math.random() * 3);
+		}
+		function getMoveName(move) {
+			var moveNames = ["rock", "scissors", "paper"];
+			return moveNames[move];
+		}
+		function getFightText(result) {
+			var resTexts = ["win", "lose", "draw"];
+			return resTexts[result];
+		}
+		function fight(player, machine) {
+			if(player + 1 == machine || player - 2 == machine) return 0;
+			else if(player == machine) return 2;
+			else return 1;
+		}
+		function startBattle(player) {
+			var machine = machineMove();
+			var res = fight(player, machine);
+			showResult(player, machine, res);
+		}
+		function showResult(player, machine, res) {
+			var resImg = document.getElementById("result_img");
+			var playerImg = document.getElementById("player_img");
+			var machineImg = document.getElementById("machine_img");
+
+			switch(res) {
+				case 0: resImg.src = "imgs/win.png"; break;
+				case 1: resImg.src = "imgs/lose.png"; break;
+				case 2: resImg.src = "imgs/draw.png"; break;
+			}
+			playerImg.src = "imgs/" + getMoveName(player) + ".png";
+			machineImg.src = "imgs/" + getMoveName(machine) + ".png";
+		}
+	</script>
+</head>
+<body>
+	<div style="float: left;">
+		<img id="player_img">
+	</div>
+	<div style="float: right;">
+		<img id="machine_img">
+	</div>
+	<img id="result_img" style="display: block;">
+	<button id="pushbtn" onclick="startBattle(0)">Rock</button>
+	<button id="pushbtn" onclick="startBattle(1)">Scissors</button>
+	<button id="pushbtn" onclick="startBattle(2)">Paper</button>
+
+</body>
+</html>
